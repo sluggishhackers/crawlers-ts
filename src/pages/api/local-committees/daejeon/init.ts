@@ -2,7 +2,7 @@
 import { PrismaClient, Prisma } from "@prisma/client";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import * as fetch from "@/clients/local-committees";
+import * as fetch from "@/clients/daejeon-local-committees";
 import * as parser from "@/parsers/daejeon-local-committees";
 import { sendMessage } from "@/utils/slack";
 
