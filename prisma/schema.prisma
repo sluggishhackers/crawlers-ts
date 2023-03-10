@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model LcCommittee {
+  code                                   String  @id @unique
+  title                                  String
+  category                               String?
+  department                             String?
+  reference                              String?
+  basis                                  String?
+  purpose                                String?
+  roles                                  String?
+  createdDate                            String?
+  revocatedDate                          String?
+  status                                 String?
+  sexRatio_civilServant_wichok_male      Int     @default(0)
+  sexRatio_civilServant_wichok_female    Int     @default(0)
+  sexRatio_civilServant_dangyeon_male    Int     @default(0)
+  sexRatio_civilServant_dangyeon_female  Int     @default(0)
+  sexRatio_civilServant_immyeong_male    Int     @default(0)
+  sexRatio_civilServant_immyeong_female  Int     @default(0)
+  sexRatio_civilServant_gonggae_male     Int     @default(0)
+  sexRatio_civilServant_gonggae_female   Int     @default(0)
+  sexRatio_civilian_sido_wichok_male     Int     @default(0)
+  sexRatio_civilian_sido_wichok_female   Int     @default(0)
+  sexRatio_civilian_sido_dangyeon_male   Int     @default(0)
+  sexRatio_civilian_sido_dangyeon_female Int     @default(0)
+  sexRatio_civilian_sido_immyeong_male   Int     @default(0)
+  sexRatio_civilian_sido_immyeong_female Int     @default(0)
+  sexRatio_civilian_sido_gonggae_male    Int     @default(0)
+  sexRatio_civilian_sido_gonggae_female  Int     @default(0)
+
+  sexRatio_civilian_recommendation_wichok_male     Int @default(0)
+  sexRatio_civilian_recommendation_wichok_female   Int @default(0)
+  sexRatio_civilian_recommendation_dangyeon_male   Int @default(0)
+  sexRatio_civilian_recommendation_dangyeon_female Int @default(0)
+  sexRatio_civilian_recommendation_immyeong_male   Int @default(0)
+  sexRatio_civilian_recommendation_immyeong_female Int @default(0)
+  sexRatio_civilian_recommendation_gonggae_male    Int @default(0)
+  sexRatio_civilian_recommendation_gonggae_female  Int @default(0)
+
+  sexRatio_civilian_citizen_wichok_male     Int    @default(0)
+  sexRatio_civilian_citizen_wichok_female   Int    @default(0)
+  sexRatio_civilian_citizen_dangyeon_male   Int    @default(0)
+  sexRatio_civilian_citizen_dangyeon_female Int    @default(0)
+  sexRatio_civilian_citizen_immyeong_male   Int    @default(0)
+  sexRatio_civilian_citizen_immyeong_female Int    @default(0)
+  sexRatio_civilian_citizen_gonggae_male    Int    @default(0)
+  sexRatio_civilian_citizen_gonggae_female  Int    @default(0)
+  operations                                Json[]
+}
