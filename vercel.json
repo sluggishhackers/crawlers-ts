@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/local-committees/daejeon",
-      "schedule": "*/5 * * * *"
+      "schedule": "0 * * * *"
     }
   ]
 }
