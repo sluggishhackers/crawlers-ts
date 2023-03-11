@@ -43,6 +43,7 @@ export default async function handler(
 
       sendMessage({
         text: `[대전시] 새로운 지역위원회가 추가되었습니다. ${detailParsed.title}`,
+        webhookUrl: process.env.SLACK_WEBHOOK_URL,
       });
     }
   }
