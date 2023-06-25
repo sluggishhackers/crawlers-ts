@@ -1,5 +1,5 @@
-import * as https from "https";
 import axios from "axios";
+import * as https from "https";
 
 export const fetchLocalCommitteeDetail = async ({
   code,

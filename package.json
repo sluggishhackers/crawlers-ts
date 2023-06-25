@@ -18,12 +18,15 @@
     "dotenv": "^16.0.3",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.4",
+    "iconv-lite": "^0.6.3",
+    "mailgun-js": "^0.22.0",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.5"
   },
   "devDependencies": {
+    "@types/mailgun-js": "^0.22.13",
     "prisma": "^4.11.0"
   }
 }

@@ -10,6 +10,58 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Prpsl {
+  id              Int     @id @default(autoincrement())
+  prpsl_type_cd   String
+  lafindex        Int
+  laf_total       Int
+  confr_grp_nm    String
+  rgst_dttm       String
+  prpsl_seq       Int?
+  div_cd          String
+  laf_idx_a       Int
+  law_status_nm   String
+  subjt_no        String
+  subjt_seq       Int?
+  mini_nm         String
+  prpsl_com_dttm  String
+  prpsl_ttl       String
+  laf_t           Int
+  prpsl_type_seq  Int?
+  mini_cd         String
+  row_id          Int
+  law_status      String
+  before          String?
+  after           String?
+  proposal        String
+  improvementPlan String
+  promotionPlan   String
+  promotionResult String
+  progress        String
+  type            String?
+  title           String?
+  category        String?
+  department      String?
+  doneDate        String?
+}
+
+model Bill {
+  id                     Int     @id @default(autoincrement())
+  category               String?
+  term                   String?
+  year                   Int?
+  number                 Int
+  city                   String
+  link                   String
+  title                  String
+  representativeProposer String?
+  proposer               String?
+  proposedDate           String?
+  committee              String?
+  committeeResult        String?
+  plenarySessionResult   String?
+}
+
 model LcCommittee {
   code                                   String  @id @unique
   title                                  String
@@ -58,3 +110,80 @@ model LcCommittee {
   sexRatio_civilian_citizen_gonggae_female  Int    @default(0)
   operations                                Json[]
 }
+
+model BokjiroService {
+  id                     String                     @id
+  cvlwlBizId             String?
+  cvlwlBizRegTeamNm      String?
+  cvlwlBizNm             String?
+  vlwlBizRegTeamNm       String?
+  addr                   String?
+  picFlnm                String?
+  picTelno               String?
+  picEmadr               String?
+  aplyNeedDocCn          String?
+  etcCn                  String?
+  dateFrom               String?
+  dateTo                 String?
+  wlfareInfoReldBztpCd   String?
+  frstCrtPgmId           String?
+  frstCrtUsrid           String?
+  frstCrtPtm             String?
+  frstCrtUsrIpadr        String?
+  lastChgPgmId           String?
+  lastChgUsrid           String?
+  lastChgPtm             String?
+  lastChgUsrIpadr        String?
+  wlfareInfoNm           String?
+  wlfareInfoAggrpCdnm    String?
+  wlbzslTcdnm            String?
+  aplyMtdDcdnm           String?
+  mkclPsbltYn            String?
+  rprsCtadr              String?
+  wlfareInfoOutlCn       String?
+  bizChrInstNm           String?
+  onapPsbltYn            String?
+  mkclUrl                String?
+  onapUrl                String?
+  dpsrvChckYn            String?
+  link                   String?
+  // wlfareSprtTrgtCn       String?
+  // aplyMtdDc              String?
+  // wlfareSprtTrgtSlcrCn   String?
+  // wlfareSprtBnftCn       String?
+  tagNm                  String?
+  cmmCdNm                String?
+  wlfareInfoReldBztpCdNm String?
+  applyWays              String?
+  CmmCd                  Json?
+  ApplyOrders            BokjiroServiceApplyOrder[]
+  selectionCriterias     String?
+  serviceContents        String?
+  targets                String?
+}
+
+model BokjiroServiceApplyOrder {
+  id               Int             @id @default(autoincrement())
+  wlfareInfoId     String?
+  wlfareInfoDtlCd  String?
+  wlfareInfoDtlSn  Int?
+  cmsatSn          String?
+  arrgOrd          Int?
+  atcflId          String?
+  atcflSn          Int?
+  oriFileNm        String?
+  dnldNt           String?
+  fileDc           String?
+  wlfareInfoReldNm String?
+  wlfareInfoReldCn String?
+  fileFrmNm        String?
+  BokjiroService   BokjiroService? @relation(fields: [bokjiroServiceId], references: [id])
+  bokjiroServiceId String?
+}
+
+// model BokjiroServiceTarget {
+//   id               Int             @id @default(autoincrement())
+//   text             String
+//   BokjiroService   BokjiroService? @relation(fields: [bokjiroServiceId], references: [id])
+//   bokjiroServiceId String?
+// }
