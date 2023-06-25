@@ -104,13 +104,11 @@ const detailForDefault = (html: string) => {
 
     try {
       if (!detailResultAgain?.[1]) {
-        throw new Error();
+        throw new Error("detailResultAgain?.[1] is undefined");
       }
       JSON.parse(_parsed);
-    } catch (e) {
-      throw new Error(
-        `페이지 해석에 문제가 발생했습니다 - page: ${options?.page}, index: ${options?.index}`
-      );
+    } catch (e: any) {
+      throw new Error(`페이지 해석에 문제가 발생했습니다\n${e.message}`);
     }
   }
 

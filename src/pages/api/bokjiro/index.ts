@@ -13,15 +13,14 @@ export default async function handler(
 ) {
   const prisma = new PrismaClient({});
 
-  const initPage = 1;
-  const pageSize = 9;
+  // const initPage = 1;
+  // const pageSize = 9;
 
-  const listResponse = await fetch.fetch({ page: initPage });
-  const _result = listResponse.data as ServerSideServiceList;
-  const totalPage = Math.ceil(_result.dmCount.dsServiceList0Count / pageSize);
+  // const listResponse = await fetch.fetch({ page: initPage });
+  // const _result = listResponse.data as ServerSideServiceList;
+  // const totalPage = Math.ceil(_result.dmCount.dsServiceList0Count / pageSize);
 
-  for (let i = 22; i <= totalPage; i++) {
-    console.log("page: ", i);
+  for (let i = 1; i <= 10; i++) {
     const listResponse = await fetch.fetch({ page: i });
     const result = listResponse.data as ServerSideServiceList;
     const services = await parser.list(result);
@@ -36,11 +35,8 @@ export default async function handler(
       });
 
       if (exisitingRow) {
-        console.log("exisiting!");
         continue;
       }
-      console.log("new! ");
-      console.log(service.WLFARE_INFO_ID);
 
       const detailResponse = await fetch.fetchDetail({
         wlfareInfoId: service.WLFARE_INFO_ID,
@@ -57,6 +53,8 @@ export default async function handler(
         data: {
           ...detail.detail,
           CmmCd: detail.cmmCd,
+          BKJR_LFTM_CYC_CD: detail.cmmCd.BKJR_LFTM_CYC_CD,
+          WLFARE_INFO_AGGRP_CD: detail.cmmCd.WLFARE_INFO_AGGRP_CD,
         },
       });
 
@@ -72,6 +70,9 @@ export default async function handler(
 
       await Promise.all(_applyOrders);
 
+      console.log(
+        `새로운 서비스가 등록되었습니다. ${createdService.id} - ${createdService.wlfareInfoNm} (${createdService.wlfareInfoReldBztpCdNm})\nlink: ${createdService.link}`
+      );
       sendMessage({
         text: `새로운 서비스가 등록되었습니다. ${createdService.id} - ${createdService.wlfareInfoNm} (${createdService.wlfareInfoReldBztpCdNm})\nlink: ${createdService.link}`,
         webhookUrl: process.env.SLACK_WEBHOOK_URL_BOKJIRO,

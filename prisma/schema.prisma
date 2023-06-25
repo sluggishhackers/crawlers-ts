@@ -160,6 +160,8 @@ model BokjiroService {
   selectionCriterias     String?
   serviceContents        String?
   targets                String?
+  BKJR_LFTM_CYC_CD       String?
+  WLFARE_INFO_AGGRP_CD   String?
 }
 
 model BokjiroServiceApplyOrder {
