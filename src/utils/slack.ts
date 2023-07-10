@@ -3,6 +3,10 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+export const CHANNEL_WEBHOOK = {
+  SLUGGISH_BOT_BTOB: process.env.SLACK_WEBHOOK_URL_SLUGGISH_BTOB,
+};
+
 export const sendMessage = ({
   text,
   webhookUrl,

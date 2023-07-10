@@ -4,8 +4,20 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import * as fetch from "@/clients/bokjiro";
 import * as parser from "@/parsers/bokjiro";
-import { sendMessage } from "@/utils/slack";
+import { CHANNEL_WEBHOOK, sendMessage } from "@/utils/slack";
 import { ServerSideServiceList } from "@/models/bokjiro";
+
+const makeMessage = ({
+  wlfareInfoNm,
+  link,
+  BKJR_LFTM_CYC_CD,
+}: {
+  wlfareInfoNm: string;
+  link: string;
+  BKJR_LFTM_CYC_CD: string;
+}) => {
+  return `${wlfareInfoNm}, (${link}), (${BKJR_LFTM_CYC_CD})`;
+};
 
 export default async function handler(
   _req: NextApiRequest,
@@ -20,7 +32,7 @@ export default async function handler(
   // const _result = listResponse.data as ServerSideServiceList;
   // const totalPage = Math.ceil(_result.dmCount.dsServiceList0Count / pageSize);
 
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= 100; i++) {
     const listResponse = await fetch.fetch({ page: i });
     const result = listResponse.data as ServerSideServiceList;
     const services = await parser.list(result);
@@ -70,12 +82,13 @@ export default async function handler(
 
       await Promise.all(_applyOrders);
 
-      console.log(
-        `새로운 서비스가 등록되었습니다. ${createdService.id} - ${createdService.wlfareInfoNm} (${createdService.wlfareInfoReldBztpCdNm})\nlink: ${createdService.link}`
-      );
       sendMessage({
-        text: `새로운 서비스가 등록되었습니다. ${createdService.id} - ${createdService.wlfareInfoNm} (${createdService.wlfareInfoReldBztpCdNm})\nlink: ${createdService.link}`,
-        webhookUrl: process.env.SLACK_WEBHOOK_URL_BOKJIRO,
+        text: makeMessage({
+          wlfareInfoNm: createdService.wlfareInfoNm || "",
+          link: createdService.link || "",
+          BKJR_LFTM_CYC_CD: createdService.BKJR_LFTM_CYC_CD || "",
+        }),
+        webhookUrl: CHANNEL_WEBHOOK.SLUGGISH_BOT_BTOB,
       });
     }
   }
