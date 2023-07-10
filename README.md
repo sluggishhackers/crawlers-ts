@@ -1,8 +1,8 @@
-# Crawler Projects by Sluggish Hackers
+# crawlers for sluggish hackers
 
-## Projects
+## targets
 
-- 대전시 지역위원회 목록 w/ 대전시민
+- [대전광역시 지역위원회 목록](https://www.daejeon.go.kr/drh/acm/drhAcmBoardList.do?menuSeq=6412)
 - [복지로](https://www.bokjiro.go.kr) w/ 비투비
 - 의안 목록 w/ 정보공개센터
   - [경상남도](https://council.gyeongnam.go.kr)
