@@ -5,6 +5,7 @@ dotenv.config();
 
 export const CHANNEL_WEBHOOK = {
   SLUGGISH_BOT_BTOB: process.env.SLACK_WEBHOOK_URL_SLUGGISH_BTOB,
+  SLUGGISH_BOT_PHARMACIST: process.env.SLACK_WEBHOOK_URL_SLUGGISH_PHARMACIST,
 };
 
 export const sendMessage = ({

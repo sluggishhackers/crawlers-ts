@@ -189,3 +189,25 @@ model BokjiroServiceApplyOrder {
 //   BokjiroService   BokjiroService? @relation(fields: [bokjiroServiceId], references: [id])
 //   bokjiroServiceId String?
 // }
+
+model MfdsSuspendedItem {
+  corpName            String
+  corpId              Int
+  productId           Int
+  productName         String
+  suspendedReportId   Int     @id
+  suspendedReportType String
+  reportDate          String
+  suspendedDate       String?
+  suspendedReason     String?
+  lackPossibility     String?
+  lackDate            String?
+  plan                String?
+  chargeName          String?
+  chargeTel           String?
+  lastSupplyDate      String?
+  lastReportType      String?
+  lastSupplyYN        String?
+  suspendedType       String?
+  suspendedYn         String?
+}
