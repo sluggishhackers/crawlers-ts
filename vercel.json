@@ -3,6 +3,18 @@
     {
       "path": "/api/local-committees/daejeon",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/bokjiro",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/mfds/suspended-items",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/korean-bars/disciplines",
+      "schedule": "0 0 * * *"
     }
   ]
 }
