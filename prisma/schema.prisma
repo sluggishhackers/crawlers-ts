@@ -211,3 +211,14 @@ model MfdsSuspendedItem {
   suspendedType       String?
   suspendedYn         String?
 }
+
+model KoreanBarDiscipline {
+  id          Int    @id @default(autoincrement())
+  name        String
+  birthday    String
+  address     String
+  affiliation String
+  discipline  String
+  reason      String
+  date        String
+}
