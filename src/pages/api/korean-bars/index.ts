@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import * as fetch from "@/clients/korean-bars";
 import * as parser from "@/parsers/korean-bars";
-import { sendMessage } from "@/utils/slack";
+import { CHANNEL_WEBHOOK, sendMessage } from "@/utils/slack";
 
 export default async function handler(
   _req: NextApiRequest,
@@ -36,6 +36,7 @@ export default async function handler(
 
         await sendMessage({
           text: `📃 ${item.name}(${item.birthday}) ${item.discipline}`,
+          webhookUrl: CHANNEL_WEBHOOK.SLUGGISH_BOT_PEOPLEPOWER,
         });
       }
     }
