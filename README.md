@@ -1,6 +1,6 @@
 # crawlers for sluggish hackers
 
-## targets
+## services
 
 - [대전광역시 지역위원회 목록](https://www.daejeon.go.kr/drh/acm/drhAcmBoardList.do?menuSeq=6412)
 - [복지로](https://www.bokjiro.go.kr) w/ [비투비](https://btob.or.kr/)
