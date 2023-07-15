@@ -26,10 +26,10 @@ export const suspendedItems = (html: string): SuspendedItem[] => {
             const regex = /suspendReportSeq=\('(\d+)'\)/;
             const idResult = regex.exec(itemHref);
             if (idResult) {
-              item.id = Number(idResult[1]);
+              item.productId = Number(idResult[1]);
             }
           } else {
-            item.id = 0;
+            item.productId = 0;
           }
           break;
       }
