@@ -222,3 +222,31 @@ model KoreanBarDiscipline {
   reason      String
   date        String
 }
+
+model AssemblyBill {
+  id                        String  @id
+  age                       String
+  no                        String
+  name                      String
+  kind                      String
+  proposer                  String
+  committee                 String
+  voteResult                String?
+  voteCountTotal            Int?
+  voteCountYes              Int?
+  voteCountNo               Int?
+  voteCountAbstain          Int?
+  proposedDate              String
+  committeeSubmitDate       String
+  committeePresentDate      String
+  committeeVoteDate         String
+  lawSubmitDate             String
+  lawPresentDate            String
+  lawVoteDate               String?
+  regularSessionPresentDate String?
+  regularSessionVoteDate    String?
+  govTransferedDate         String?
+  announceDate              String?
+  link                      String
+  committeeId               String
+}

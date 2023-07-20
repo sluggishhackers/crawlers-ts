@@ -2,22 +2,25 @@
 import { PrismaClient } from "@prisma/client";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import { fetchMembers } from "@/crawlers/assembly";
+import * as fetch from "@/clients/assembly";
 import { CHANNEL_WEBHOOK, sendMessage } from "@/utils/slack";
 
 export default async function handler(
-  _req: NextApiRequest,
+  req: NextApiRequest,
   res: NextApiResponse
 ) {
   const prisma = new PrismaClient();
+  const billId = req.query.id;
 
-  let page = 1;
-  let hasNext = true;
+  if (!billId) {
+    res.status(404).json({ success: false });
+    return;
+  }
 
-  const members = await fetchMembers({
-    page: 1,
-    pageSize: 400,
+  const result = await fetch.votingResultsOnRegularSession({
+    billId: billId as string,
+    age: 21,
   });
 
-  res.status(200).json({ members });
+  res.status(200).json({ votes: result });
 }

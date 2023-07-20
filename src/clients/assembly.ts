@@ -5,6 +5,8 @@ import { ServerSideSuspendedItem, SuspendedItem } from "@/models/mfds";
 import {
   AssemblyMember,
   ServerSideAssemblyMember,
+  ServerSideBillByMembers,
+  ServerSideBillEtcOnRegularSessions,
   ServerSideVotingResultOnRegularSession,
 } from "@/models/assembly";
 
@@ -30,49 +32,177 @@ type QUERY_VOTING_RESULTS_ON_REGULAR_SESSION = {
 //   AGE: string;
 // };
 
-export const assemblyMembers = async ({
+export const oldMembers = async ({
   page,
   pageSize,
-  unit,
+  age,
+  monaCode,
+  name,
 }: {
+  age: number;
   page: number;
   pageSize?: number;
-  unit: number;
-}): Promise<AssemblyMember[]> => {
+  monaCode?: string;
+  name?: string;
+}): Promise<ServerSideAssemblyMember[]> => {
   const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
   });
 
   const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
 
+  const query: {
+    pIndex: number;
+    pSize: number;
+    KEY: string;
+    UNIT_CD: string;
+    MONA_CD?: string;
+    HG_NM?: string;
+    Type: "json";
+  } = {
+    pIndex: page,
+    pSize: pageSize || 10,
+    UNIT_CD: `1000${age}`,
+    KEY: apiKey,
+    Type: "json",
+  };
+
+  if (name) {
+    query.HG_NM = name;
+  }
+
+  if (monaCode) {
+    query.MONA_CD = monaCode;
+  }
+
+  const queryString = qs.stringify(query, {
+    encodeValuesOnly: false,
+  });
+
   const result = await axios.get(
-    `https://open.assembly.go.kr/portal/openapi/npffdutiapkzbfyvr?type=json&key=${apiKey}&UNIT_CD=1000${unit}&pIndex=${page}&pSize=${
-      pageSize || 100
-    }`,
+    `https://open.assembly.go.kr/portal/openapi/npffdutiapkzbfyvr?${queryString}`,
     {
       httpsAgent,
     }
   );
 
-  const items = result.data.npffdutiapkzbfyvr[1]
-    .row as ServerSideAssemblyMember[];
+  if (result.data?.RESULT?.CODE === "INFO-200") {
+    return [];
+  }
 
-  return items.map((item) => ({
-    modaCode: item.MONA_CD,
-    name: item.HG_NM,
-    nameHanja: item.HJ_NM,
-    nameEnglish: item.ENG_NM,
-    birthdateType: item.BTH_GBN_NM,
-    birthdate: item.BTH_DATE,
-    gender: item.SEX_GBN_NM,
-    reelected: item.REELE_GBN_NM,
-    unit: item.UNITS,
-    unitCode: item.UNIT_CD,
-    unitName: item.UNIT_NM,
-    partyName: item.POLY_NM,
-    electionDistrict: item.ORIG_NM,
-    electionDistrictType: item.ELECT_GBN_NM,
-  })) as AssemblyMember[];
+  return result.data.npffdutiapkzbfyvr[1].row as ServerSideAssemblyMember[];
+};
+
+export const members = async ({
+  page,
+  pageSize,
+  monaCode,
+  name,
+}: {
+  page: number;
+  pageSize?: number;
+  monaCode?: string;
+  name?: string;
+}): Promise<ServerSideAssemblyMember[]> => {
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
+
+  const query: {
+    pIndex: number;
+    pSize: number;
+    KEY: string;
+    MONA_CD?: string;
+    HG_NM?: string;
+    Type: "json";
+  } = {
+    pIndex: page,
+    pSize: pageSize || 10,
+    KEY: apiKey,
+    Type: "json",
+  };
+
+  if (name) {
+    query.HG_NM = name;
+  }
+
+  if (monaCode) {
+    query.MONA_CD = monaCode;
+  }
+
+  const queryString = qs.stringify(query, {
+    encodeValuesOnly: false,
+  });
+
+  const result = await axios.get(
+    `https://open.assembly.go.kr/portal/openapi/nwvrqwxyaytdsfvhu?${queryString}`,
+    {
+      httpsAgent,
+    }
+  );
+
+  if (result.data?.RESULT?.CODE === "INFO-200") {
+    return [];
+  }
+
+  return result.data.nwvrqwxyaytdsfvhu[1].row as ServerSideAssemblyMember[];
+};
+
+export const billsByMembers = async ({
+  age,
+  page,
+  pageSize,
+}: {
+  age: number;
+  page: number;
+  pageSize: number;
+}) => {
+  const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
+
+  const query: {
+    pIndex: number;
+    pSize: number;
+    AGE: string;
+    KEY: string;
+    type: "json";
+  } = {
+    pIndex: page,
+    pSize: pageSize,
+    AGE: `${age}`,
+    KEY: apiKey,
+    type: "json",
+  };
+
+  const queryString = qs.stringify(query, {
+    encodeValuesOnly: true,
+  });
+
+  const result = await axios.get(
+    `https://open.assembly.go.kr/portal/openapi/nzmimeepazxkubdpn?${queryString}`
+  );
+
+  return result.data.nzmimeepazxkubdpn[1].row as ServerSideBillByMembers[];
+};
+
+export const billsEtcOnRegularSessions = async ({
+  age,
+  page,
+  pageSize,
+}: {
+  age: number;
+  page: number;
+  pageSize: number;
+}) => {
+  const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
+  console.log(apiKey);
+
+  const result = await axios.get(
+    `https://open.assembly.go.kr/portal/openapi/nwbpacrgavhjryiph?type=json&pIndex=${page}&pSize=${pageSize}&age=${age}&KEY=${apiKey}`
+  );
+
+  return result.data.nwbpacrgavhjryiph[1].row as ServerSideBill[];
 };
 
 export const votingResultsOnRegularSession = async ({
