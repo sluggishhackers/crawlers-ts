@@ -4,9 +4,13 @@ import axios from "axios";
 import { ServerSideSuspendedItem, SuspendedItem } from "@/models/mfds";
 import {
   AssemblyMember,
+  ServerSideAssemblyBill,
+  ServerSideAssemblyCommittee,
   ServerSideAssemblyMember,
+  ServerSideAssemblyMemberFromHJ,
   ServerSideBillByMembers,
   ServerSideBillEtcOnRegularSessions,
+  ServerSideBonMeeting,
   ServerSideVotingResultOnRegularSession,
 } from "@/models/assembly";
 
@@ -14,7 +18,7 @@ type QUERY_VOTING_RESULTS_ON_REGULAR_SESSION = {
   billId: string;
   voteResult?: "찬성" | "반대" | "기권";
   monaCode?: string;
-  age: 20 | 21;
+  age: number;
 };
 
 // type QUERY_VOTING_RESULTS_ON_REGULAR_SESSION = {
@@ -31,6 +35,53 @@ type QUERY_VOTING_RESULTS_ON_REGULAR_SESSION = {
 //   MONA_CD?: string;
 //   AGE: string;
 // };
+
+export const bonMeetings = async ({
+  page,
+  pageSize,
+  age,
+}: {
+  age: number;
+  page: number;
+  pageSize?: number;
+}): Promise<ServerSideBonMeeting[]> => {
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
+
+  const query: {
+    pIndex: number;
+    pSize: number;
+    KEY: string;
+    UNIT_CD: string;
+    Type: "json";
+  } = {
+    pIndex: page,
+    pSize: pageSize || 10,
+    UNIT_CD: "1000" + `${age}`.padStart(2, "0"),
+    KEY: apiKey,
+    Type: "json",
+  };
+
+  const queryString = qs.stringify(query, {
+    encodeValuesOnly: false,
+  });
+
+  const result = await axios.get(
+    `https://open.assembly.go.kr/portal/openapi/nekcaiymatialqlxr?${queryString}`,
+    {
+      httpsAgent,
+    }
+  );
+
+  if (result.data?.RESULT?.CODE === "INFO-200") {
+    return [];
+  }
+
+  return result.data.nekcaiymatialqlxr[1].row as ServerSideBonMeeting[];
+};
 
 export const oldMembers = async ({
   page,
@@ -62,7 +113,7 @@ export const oldMembers = async ({
   } = {
     pIndex: page,
     pSize: pageSize || 10,
-    UNIT_CD: `1000${age}`,
+    UNIT_CD: "1000" + `${age}`.padStart(2, "0"),
     KEY: apiKey,
     Type: "json",
   };
@@ -91,6 +142,62 @@ export const oldMembers = async ({
   }
 
   return result.data.npffdutiapkzbfyvr[1].row as ServerSideAssemblyMember[];
+};
+
+export const oldMembersFromHJ = async ({
+  page,
+  pageSize,
+  age,
+  name,
+}: {
+  age: number;
+  page: number;
+  pageSize?: number;
+  monaCode?: string;
+  name?: string;
+}): Promise<ServerSideAssemblyMemberFromHJ[]> => {
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
+
+  const query: {
+    pIndex: number;
+    pSize: number;
+    KEY: string;
+    DAESU: number;
+    NAME?: string;
+    Type: "json";
+  } = {
+    pIndex: page,
+    pSize: pageSize || 10,
+    KEY: apiKey,
+    Type: "json",
+    DAESU: age,
+  };
+
+  if (name) {
+    query.NAME = name;
+  }
+
+  const queryString = qs.stringify(query, {
+    encodeValuesOnly: false,
+  });
+
+  const result = await axios.get(
+    `https://open.assembly.go.kr/portal/openapi/nprlapfmaufmqytet?${queryString}`,
+    {
+      httpsAgent,
+    }
+  );
+
+  if (result.data?.RESULT?.CODE === "INFO-200") {
+    return [];
+  }
+
+  return result.data.nprlapfmaufmqytet[1]
+    .row as ServerSideAssemblyMemberFromHJ[];
 };
 
 export const members = async ({
@@ -150,6 +257,40 @@ export const members = async ({
   return result.data.nwvrqwxyaytdsfvhu[1].row as ServerSideAssemblyMember[];
 };
 
+export const committees = async ({
+  page,
+  pageSize,
+}: {
+  page: number;
+  pageSize: number;
+}) => {
+  const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
+
+  const query: {
+    pIndex: number;
+    pSize: number;
+    KEY: string;
+    type: "json";
+    CMT_DIV_NM: string;
+  } = {
+    CMT_DIV_NM: "상임위원회",
+    pIndex: page,
+    pSize: pageSize,
+    KEY: apiKey,
+    type: "json",
+  };
+
+  const queryString = qs.stringify(query, {
+    encodeValuesOnly: true,
+  });
+
+  const result = await axios.get(
+    `https://open.assembly.go.kr/portal/openapi/nxrvzonlafugpqjuh?${queryString}`
+  );
+
+  return result.data.nxrvzonlafugpqjuh[1].row as ServerSideAssemblyCommittee[];
+};
+
 export const billsByMembers = async ({
   age,
   page,
@@ -196,13 +337,56 @@ export const billsEtcOnRegularSessions = async ({
   pageSize: number;
 }) => {
   const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
-  console.log(apiKey);
 
   const result = await axios.get(
     `https://open.assembly.go.kr/portal/openapi/nwbpacrgavhjryiph?type=json&pIndex=${page}&pSize=${pageSize}&age=${age}&KEY=${apiKey}`
   );
 
-  return result.data.nwbpacrgavhjryiph[1].row as ServerSideBill[];
+  return result.data.nwbpacrgavhjryiph[1]
+    .row as ServerSideBillEtcOnRegularSessions[];
+};
+
+export const bills = async ({
+  page,
+  pageSize,
+}: {
+  page: number;
+  pageSize?: number;
+}): Promise<ServerSideAssemblyBill[]> => {
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  const apiKey = process.env.OPEN_ASSEMBLY_API_KEY || "sample";
+
+  const query: {
+    pIndex: number;
+    pSize: number;
+    KEY: string;
+    Type: "json";
+  } = {
+    pIndex: page,
+    pSize: pageSize || 10,
+    KEY: apiKey,
+    Type: "json",
+  };
+
+  const queryString = qs.stringify(query, {
+    encodeValuesOnly: false,
+  });
+
+  const result = await axios.get(
+    `https://open.assembly.go.kr/portal/openapi/TVBPMBILL11?${queryString}`,
+    {
+      httpsAgent,
+    }
+  );
+
+  if (result.data?.RESULT?.CODE === "INFO-200") {
+    return [];
+  }
+
+  return result.data.TVBPMBILL11[1].row as ServerSideAssemblyBill[];
 };
 
 export const votingResultsOnRegularSession = async ({
@@ -226,9 +410,11 @@ export const votingResultsOnRegularSession = async ({
     RESULT_VOTE_MOD?: string;
     MONA_CD?: string;
     AGE: string;
+    Type: "json";
   } = {
     BILL_ID: billId,
     AGE: `${age}`,
+    Type: "json",
   };
 
   if (monaCode) {
@@ -250,8 +436,12 @@ export const votingResultsOnRegularSession = async ({
     }
   );
 
-  const items = result.data
-    .nojepdqqaweusdfbi[1] as ServerSideVotingResultOnRegularSession[];
+  if (result.data?.RESULT?.CODE === "INFO-200") {
+    return [];
+  }
+
+  const items = result.data.nojepdqqaweusdfbi[1]
+    .row as ServerSideVotingResultOnRegularSession[];
 
   return items;
 };

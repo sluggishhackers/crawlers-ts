@@ -224,29 +224,130 @@ model KoreanBarDiscipline {
 }
 
 model AssemblyBill {
-  id                        String  @id
-  age                       String
+  id                        String               @id @db.VarChar(200)
+  age                       Int
   no                        String
   name                      String
-  kind                      String
+  kind                      String?
   proposer                  String
-  committee                 String
   voteResult                String?
   voteCountTotal            Int?
   voteCountYes              Int?
   voteCountNo               Int?
   voteCountAbstain          Int?
-  proposedDate              String
-  committeeSubmitDate       String
-  committeePresentDate      String
-  committeeVoteDate         String
-  lawSubmitDate             String
-  lawPresentDate            String
+  proposedDate              String?
+  committeeSubmitDate       String?
+  committeePresentDate      String?
+  committeeVoteDate         String?
+  lawSubmitDate             String?
+  lawPresentDate            String?
   lawVoteDate               String?
   regularSessionPresentDate String?
   regularSessionVoteDate    String?
   govTransferedDate         String?
   announceDate              String?
   link                      String
-  committeeId               String
+  committee                 AssemblyCommittee    @relation(references: [id], fields: [committeeId])
+  committeeId               String               @db.VarChar(50)
+  AssemblyVoteByBill        AssemblyVoteByBill[]
+}
+
+model AssemblyMember {
+  id                   Int                   @id @default(autoincrement())
+  hjId                 Int?
+  monaCode             String                @unique @db.VarChar(50)
+  name                 String                @db.VarChar(50)
+  nameHanja            String?               @db.VarChar(50)
+  nameEnglish          String                @db.VarChar(50)
+  birthdateType        String                @db.VarChar(10)
+  birthdate            String                @db.VarChar(20)
+  gender               String                @db.VarChar(200)
+  reelected            String                @db.VarChar(200)
+  partyName            String                @db.VarChar(200)
+  electionDistrict     String?               @db.VarChar(200)
+  electionDistrictType String?               @db.VarChar(200)
+  job                  String?               @db.VarChar(200)
+  tel                  String?               @db.VarChar(200)
+  committee            String?               @db.VarChar(200)
+  committees           String?               @db.VarChar(200)
+  email                String?               @db.VarChar(200)
+  homepage             String?               @db.VarChar(200)
+  staff                String?               @db.VarChar(200)
+  secretary            String?               @db.VarChar(200)
+  secretary2           String?               @db.VarChar(200)
+  profile              String?
+  officeAddress        String?               @db.VarChar(200)
+  religionAndHobby     String?
+  careerAndEducation   String?
+  partiesByAge         String?
+  books                String?
+  AssemblyMemberByAge  AssemblyMemberByAge[]
+  AssemblyVoteByBill   AssemblyVoteByBill[]
+}
+
+model AssemblyMemberByAge {
+  id               Int            @id @default(autoincrement())
+  assemblyMember   AssemblyMember @relation(references: [id], fields: [assemblyMemberId])
+  assemblyMemberId Int
+  age              Int
+}
+
+model AssemblyMemberFromHJ {
+  id                 Int     @id @default(autoincrement())
+  hjId               Int
+  age                Int
+  birth              String? @db.VarChar(20)
+  name               String
+  religionAndHobby   String?
+  careerAndEducation String?
+  partiesByAge       String?
+  books              String?
+}
+
+model AssemblyCommittee {
+  id                      String               @id @db.VarChar(100)
+  name                    String
+  chairperson             String?
+  assistants              String?
+  limitAssistantsCount    Int?
+  currentCount            Int?
+  nonNegotiationBodyCount Int?
+  negotiationBodyCount    Int?
+  AssemblyBill            AssemblyBill[]
+  AssemblyVoteByBill      AssemblyVoteByBill[]
+}
+
+model AssemblyBonMeeting {
+  id                 String               @id
+  termStr            String               @db.VarChar(200)
+  term               Int
+  number             Int
+  title              String               @db.VarChar(200)
+  date               String               @db.VarChar(200)
+  time               String               @db.VarChar(200)
+  url                String               @db.VarChar(200)
+  age                Int
+  AssemblyVoteByBill AssemblyVoteByBill[]
+}
+
+model AssemblyVoteByBill {
+  id             Int    @id @default(autoincrement())
+  voteDate       String @db.VarChar(10)
+  voteResultCode String @db.VarChar(10)
+  age            Int
+  // presentMembersCount Int
+  // voteCountTotal      Int
+  // voteCountYes        Int
+  // voteCountNo         Int
+  // voteCountAbstain    Int
+  // url                 String @db.VarChar(200)
+
+  bill         AssemblyBill       @relation(references: [id], fields: [billId])
+  billId       String             @db.VarChar(200)
+  committee    AssemblyCommittee  @relation(references: [id], fields: [committeeId])
+  committeeId  String             @db.VarChar(50)
+  member       AssemblyMember     @relation(references: [id], fields: [memberId])
+  memberId     Int
+  bonMeeting   AssemblyBonMeeting @relation(references: [id], fields: [bonMeetingId])
+  bonMeetingId String
 }

@@ -1,7 +1,7 @@
 export type ServerSideAssemblyMember = {
   MONA_CD: string;
   HG_NM: string;
-  HJ_NM: string;
+  HJ_NM?: string;
   ENG_NM: string;
   BTH_GBN_NM: string;
   BTH_DATE: string;
@@ -24,6 +24,63 @@ export type ServerSideAssemblyMember = {
   SECRETARY2?: string;
   MEM_TITLE?: string;
   ASSEM_ADDR?: string;
+};
+
+export type AssemblyMember = {
+  monaCode: string;
+  name: string;
+  nameHanja: string;
+  nameEnglish?: string;
+  birthdateType: string;
+  birthdate: string;
+  gender: string;
+  reelected: string;
+  partyName: string;
+  electionDistrict?: string;
+  electionDistrictType?: string;
+  job?: string;
+  tel?: string;
+  committee?: string;
+  committees?: string[];
+  email?: string;
+  homepage?: string;
+  staff?: string[];
+  secretary?: string[];
+  secretary2?: string[];
+  profile?: string[];
+  officeAddress?: string;
+};
+
+export type ServerSideAssemblyMemberFromHJ = {
+  DAESU: string;
+  DAE: string;
+  DAE_NM: string;
+  NAME: string;
+  NAME_HAN: string;
+  BIRTH: string;
+  BON: string;
+  POSI: string;
+  HAK: string;
+  HOBBY: string;
+  BOOK: string;
+  SANG: string;
+  DEAD: string;
+  URL: string;
+};
+
+export type AssemblyMemberFromHJ = {
+  id: string;
+  age: number;
+  partiesByAge: string[];
+  name: string;
+  nameHanja: string;
+  birthDate: string;
+  birthRegion: string;
+  careerAndEducation: string[];
+  religionAndHobby: string[];
+  books: string[];
+  deadDate: string;
+  url: string;
 };
 
 export type ServerSideVotingResultOnRegularSession = {
@@ -97,10 +154,10 @@ export type ServerSideBillEtcOnRegularSessions = {
 };
 
 export type AssemblyBill = {
-  age: string; // AGE
+  age: number; // AGE
   no: string; // BILL_NO
   name: string; // BILL_NM
-  kind: string; // BILL_KIND
+  kind?: string; // BILL_KIND
   proposer: string;
   committee: string; // 상임위원회
   voteResult?: string; // 의결결과
@@ -122,32 +179,99 @@ export type AssemblyBill = {
   id: string; // 의안ID
   link: string;
   committeeId: string; // 소관위원회ID
+  voteDate?: string;
 };
 
-export type AssemblyMember = {
-  monaCode: string;
+export type ServerSideAssemblyCommittee = {
+  CMT_DIV_CD: string;
+  CMT_DIV_NM: string;
+  HR_DEPT_CD: string;
+  COMMITTEE_NAME: string;
+  HG_NM: string;
+  HG_NM_LIST: string;
+  LIMIT_CNT: string;
+  CURR_CNT: string;
+  POLY99_CNT: string;
+  POLY_CNT: string;
+};
+
+export type AssemblyCommittee = {
+  id: string;
   name: string;
-  nameHanja: string;
-  nameEnglish: string;
-  birthdateType: string;
-  birthdate: string;
-  gender: string;
-  reelected: string;
-  unit: string;
-  unitCode: string;
-  unitName: string;
-  partyName: string;
-  electionDistrict: string;
-  electionDistrictType: string;
-  job?: string;
-  tel?: string;
-  committee?: string;
-  committees?: string;
-  email?: string;
-  homepage?: string;
-  staff?: string[];
-  secretary?: string[];
-  secretary2?: string[];
-  profile?: string[];
-  officeAddress?: string;
+  chairperson: string;
+  assistants: string;
+  limitAssistantsCount: string;
+  currentCount: string;
+  nonNegotiationBodyCount: number;
+  negotiationBodyCount: number;
+};
+
+export type ServerSideBonMeeting = {
+  MEETINGSESSION: string;
+  CHA: string;
+  TITLE: string;
+  MEETTING_DATE: string;
+  MEETTING_TIME: string;
+  LINK_URL: string;
+  UNIT_CD: string;
+  UNIT_NM: string;
+};
+
+export type BonMeeting = {
+  id: string;
+  termStr: string;
+  term: number;
+  number: number;
+  title: string;
+  date: string;
+  time: string;
+  url: string;
+  age: number;
+};
+
+export type ServerSideAssemblyVoteByBill = {
+  BILL_ID: string;
+  PROC_DT: string;
+  BILL_NO: string;
+  BILL_NAME: string;
+  CURR_COMMITTEE: string;
+  CURR_COMMITTEE_ID: string;
+  PROC_RESULT_CD: string;
+  BILL_KIND_CD: string;
+  AGE: string;
+  MEMBER_TCNT: string;
+  VOTE_TCNT: string;
+  YES_TCNT: string;
+  NO_TCNT: string;
+  BLANK_TCNT: string;
+  LINK_URL: string;
+};
+
+export type AssemblyVoteByBill = {
+  billId: string;
+  voteDate: string;
+  committee: string;
+  committeeId: string;
+  voteResultCode: string;
+  age: number;
+  sessionTerm: number;
+  sessionNumber: number;
+  monaCode: string;
+};
+
+export type ServerSideAssemblyBill = {
+  BILL_ID: string;
+  BILL_NO: string;
+  AGE: string;
+  BILL_NAME: string;
+  PROPOSER: string;
+  PROPOSER_KIND: string;
+  PROPOSE_DT: string;
+  PROC_RESULT_CD: string;
+  CURR_COMMITTEE_ID: string;
+  CURR_COMMITTEE: string;
+  PROC_DT: string;
+  LINK_URL: string;
+  COMMITTEE_DT: string; // 회부일
+  COMMITTEE_PROC_DT?: string; // 심사처리일
 };
