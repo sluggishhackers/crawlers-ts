@@ -8,10 +8,10 @@ export default async function handler(
   res: NextApiResponse
 ) {
   const page = req.query.page || 1;
-  const age = req.query.age || "20";
+  const age = req.query.age || "21";
 
-  if (+age >= 21) {
-    throw new Error("20대 이하 국회의원 인적사항만 가져올 수 있습니다.");
+  if (+age >= 22) {
+    throw new Error("21대 이하 국회의원 인적사항만 가져올 수 있습니다.");
   }
 
   const members = await fetchOldMembers({

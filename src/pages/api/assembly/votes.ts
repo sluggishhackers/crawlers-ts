@@ -18,10 +18,14 @@ export default async function handler(
 
   //   for (const member of members) {
   for (const bill of bills) {
+    console.log("billId: ", bill.id);
+
     const votes = await fetchVotingResultOnRegularSessionsByMembers({
       age: +age,
       billId: bill.id,
     });
+
+    console.log("votes: ", votes.length);
 
     for (const vote of votes) {
       const bonMeeting = await prisma.assemblyBonMeeting.findFirst({

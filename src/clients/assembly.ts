@@ -411,10 +411,14 @@ export const votingResultsOnRegularSession = async ({
     MONA_CD?: string;
     AGE: string;
     Type: "json";
+    KEY: string;
+    pSize: number;
   } = {
+    KEY: apiKey,
     BILL_ID: billId,
     AGE: `${age}`,
     Type: "json",
+    pSize: 400,
   };
 
   if (monaCode) {
@@ -430,7 +434,7 @@ export const votingResultsOnRegularSession = async ({
   });
 
   const result = await axios.get(
-    `https://open.assembly.go.kr/portal/openapi/nojepdqqaweusdfbi?${queryString}&apiKey=${apiKey}`,
+    `https://open.assembly.go.kr/portal/openapi/nojepdqqaweusdfbi?${queryString}`,
     {
       httpsAgent,
     }
