@@ -1,3 +1,57 @@
+export type ServerSideShortItem = {
+  sysGbCode: string;
+  entpSeq: string;
+  entpName: string;
+  itemSeq: string;
+  itemName: string;
+  reportDate: string;
+  slReportSeq: string;
+  entpNo: string;
+  reporterAddr: string;
+  reporterName: string;
+  ediStdCode: string;
+  slOccurExpectDate: string;
+  slReason: string;
+  lastSupplyDate: string;
+  lackQyDate: string;
+  lackQy: string;
+  patientMdlrtAffc: string;
+  supplyPlan: string;
+  supplyPlanDate: string;
+  chargeName: string;
+  chargeTelNo: string;
+  examResultDt: string;
+  reasonDocNo: string;
+  deptReceiptNo: string;
+};
+
+export type ShortItem = {
+  sysGbCode: string;
+  entpSeq: number;
+  entpName: string;
+  itemSeq: number;
+  itemName: string;
+  reportDate: string;
+  slReportSeq: string;
+  entpNo: number;
+  reporterAddr: string;
+  reporterName: string;
+  ediStdCode: string;
+  slOccurExpectDate: string;
+  slReason: string;
+  lastSupplyDate: string;
+  lackQyDate: string;
+  lackQy: string;
+  patientMdlrtAffc: string;
+  supplyPlan: string;
+  supplyPlanDate: string;
+  chargeName: string;
+  chargeTelNo: string;
+  examResultDt: string;
+  reasonDocNo: string;
+  deptReceiptNo: string;
+};
+
 export type ServerSideSuspendedItem = {
   suspendReportSeq: string;
   suspendReportGb: "수입" | "생산";
@@ -13,7 +67,7 @@ export type ServerSideSuspendedItem = {
   supplyPlan: string;
   chargeName: string;
   chargeTel: string;
-  lastSupplyDate: "string";
+  lastSupplyDate: string;
   lastReportGb: "수입" | "생산";
   lastSupplyGb: "Y" | "N";
   suspendGb: "수입" | "생산";

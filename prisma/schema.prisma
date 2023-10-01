@@ -190,12 +190,18 @@ model BokjiroServiceApplyOrder {
 //   bokjiroServiceId String?
 // }
 
+enum MfdsType {
+  Suspended
+  Short
+}
+
 model MfdsSuspendedItem {
+  id                  Int     @id @default(autoincrement())
   corpName            String
   corpId              Int
   productId           Int
   productName         String
-  suspendedReportId   Int     @id
+  suspendedReportId   Int
   suspendedReportType String
   reportDate          String
   suspendedDate       String?
@@ -210,6 +216,33 @@ model MfdsSuspendedItem {
   lastSupplyYN        String?
   suspendedType       String?
   suspendedYn         String?
+}
+
+model MfdsShortItem {
+  sysGbCode         String
+  entpSeq           Int
+  entpName          String
+  itemSeq           Int
+  itemName          String
+  reportDate        String
+  slReportSeq       String  @id
+  entpNo            Int
+  reporterAddr      String?
+  reporterName      String?
+  ediStdCode        String?
+  slOccurExpectDate String?
+  slReason          String? @db.Text()
+  lastSupplyDate    String?
+  lackQyDate        String?
+  lackQy            String?
+  patientMdlrtAffc  String? @db.Text()
+  supplyPlan        String? @db.Text()
+  supplyPlanDate    String?
+  chargeName        String?
+  chargeTelNo       String?
+  examResultDt      String?
+  reasonDocNo       String
+  deptReceiptNo     String?
 }
 
 model KoreanBarDiscipline {

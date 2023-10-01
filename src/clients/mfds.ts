@@ -1,6 +1,11 @@
 import * as https from "https";
 import axios from "axios";
-import { ServerSideSuspendedItem, SuspendedItem } from "@/models/mfds";
+import {
+  ServerSideShortItem,
+  ServerSideSuspendedItem,
+  ShortItem,
+  SuspendedItem,
+} from "@/models/mfds";
 
 export const suspendedItems = async ({
   page,
@@ -63,4 +68,94 @@ export const suspendedItem = async ({
     suspendedType: item.suspendGb,
     suspendedYn: item.suspendYn,
   } as SuspendedItem;
+};
+
+export const shortItems = async ({
+  page,
+}: {
+  page: number;
+}): Promise<ShortItem[]> => {
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  const result = await axios.get(
+    `https://nedrug.mfds.go.kr/pbp/CCBAG01/getList?totalPages=33&page=${page}&limit=10&sort=&sortOrder=&searchYn=true&itemName=&entpName=&reportDateStart=&reportDateEnd=&btnSearch=`,
+    {
+      httpsAgent,
+    }
+  );
+
+  const items = result.data.list as ServerSideShortItem[];
+  return items.map((item) => ({
+    sysGbCode: item.sysGbCode,
+    entpName: item.entpName,
+    itemName: item.itemName,
+    reportDate: item.reportDate,
+    reporterAddr: item.reporterAddr,
+    reporterName: item.reporterName,
+    slOccurExpectDate: item.slOccurExpectDate,
+    slReason: item.slReason,
+    lastSupplyDate: item.lastSupplyDate,
+    lackQyDate: item.lackQyDate,
+    patientMdlrtAffc: item.patientMdlrtAffc,
+    supplyPlan: item.supplyPlan,
+    supplyPlanDate: item.supplyPlanDate,
+    chargeName: item.chargeName,
+    chargeTelNo: item.chargeTelNo,
+    examResultDt: item.examResultDt,
+    reasonDocNo: item.reasonDocNo,
+    deptReceiptNo: item.deptReceiptNo,
+    entpNo: Number(item.entpNo),
+    entpSeq: Number(item.entpSeq),
+    itemSeq: Number(item.itemSeq),
+    slReportSeq: item.slReportSeq,
+    lackQy: item.lackQy,
+    ediStdCode: item.ediStdCode,
+  })) as ShortItem[];
+};
+
+export const shortItem = async ({
+  slReportId,
+}: {
+  slReportId: string;
+}): Promise<ShortItem> => {
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+
+  const result = await axios.get(
+    `https://nedrug.mfds.go.kr/pbp/CCBAG01/getItem?totalPages=70&limit=10&page=2&=&slReportSeq=${slReportId}`,
+    {
+      httpsAgent,
+    }
+  );
+
+  const item: ServerSideShortItem = result.data.item;
+  return {
+    sysGbCode: item.sysGbCode,
+    entpName: item.entpName,
+    itemName: item.itemName,
+    reportDate: item.reportDate,
+    reporterAddr: item.reporterAddr,
+    reporterName: item.reporterName,
+    slOccurExpectDate: item.slOccurExpectDate,
+    slReason: item.slReason,
+    lastSupplyDate: item.lastSupplyDate,
+    lackQyDate: item.lackQyDate,
+    patientMdlrtAffc: item.patientMdlrtAffc,
+    supplyPlan: item.supplyPlan,
+    supplyPlanDate: item.supplyPlanDate,
+    chargeName: item.chargeName,
+    chargeTelNo: item.chargeTelNo,
+    examResultDt: item.examResultDt,
+    reasonDocNo: item.reasonDocNo,
+    deptReceiptNo: item.deptReceiptNo,
+    entpNo: Number(item.entpNo),
+    entpSeq: Number(item.entpSeq),
+    itemSeq: Number(item.itemSeq),
+    slReportSeq: item.slReportSeq,
+    lackQy: item.lackQy,
+    ediStdCode: item.ediStdCode,
+  } as ShortItem;
 };
