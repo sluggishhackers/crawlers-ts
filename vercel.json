@@ -9,6 +9,10 @@
       "schedule": "0 0 * * *"
     },
     {
+      "path": "/api/mfds/short-items",
+      "schedule": "0 0 * * *"
+    },
+    {
       "path": "/api/mfds/suspended-items",
       "schedule": "0 0 * * *"
     },
