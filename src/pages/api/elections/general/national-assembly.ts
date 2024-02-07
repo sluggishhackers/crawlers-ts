@@ -4,6 +4,7 @@ import { GeneralElectionType, PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import * as fetch from "@/clients/nec";
 import * as parser from "@/parsers/nec";
+import { CHANNEL_WEBHOOK, sendMessage } from "@/utils/slack";
 
 export default async function handler(
   req: NextApiRequest,
@@ -87,6 +88,11 @@ export default async function handler(
       }
     }
   }
+
+  sendMessage({
+    text: "24년 국회의원선거 후보자 업데이트를 완료하였습니다.",
+    webhookUrl: CHANNEL_WEBHOOK.SLUGGISH_BOT_ELECTION24,
+  });
 
   res.status(200).json({ success: true });
 }
