@@ -384,3 +384,33 @@ model AssemblyVoteByBill {
   bonMeeting   AssemblyBonMeeting @relation(references: [id], fields: [bonMeetingId])
   bonMeetingId String
 }
+
+enum GeneralElectionType {
+  NationalAssembly
+  GusigunJang
+  MunicipalAssembly
+  GusigunAssembly
+}
+
+model GeneralElectionCandidate {
+  id                    Int                  @id @default(autoincrement())
+  name                  String
+  nameHanja             String?
+  sido                  String
+  sidoCode              Int
+  electoralDistrict     String
+  electoralDistrictCode Int
+  gender                String
+  party                 String
+  photo                 String
+  birthDate             String
+  age                   Int
+  address               String
+  job                   String?
+  educations            String?
+  careers               String?
+  criminalRecord        String?
+  registerDate          String?
+  active                Boolean              @default(false)
+  electionType          GeneralElectionType?
+}
