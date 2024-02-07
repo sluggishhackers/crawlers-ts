@@ -17,20 +17,20 @@ export const shortItems = (html: string): ShortItem[] => {
           item.reportDate = value.text().trim();
           break;
         case 2:
-          item.corpName = value.text().trim();
+          // item.corpName = value.text().trim();
           break;
         case 3:
-          item.productName = value.find("a").text().trim();
-          const itemHref = value.find("a").attr("href")?.trim();
-          if (itemHref) {
-            const regex = /suspendReportSeq=\('(\d+)'\)/;
-            const idResult = regex.exec(itemHref);
-            if (idResult) {
-              item.productId = Number(idResult[1]);
-            }
-          } else {
-            item.productId = 0;
-          }
+          // item.productName = value.find("a").text().trim();
+          // const itemHref = value.find("a").attr("href")?.trim();
+          // if (itemHref) {
+          //   const regex = /suspendReportSeq=\('(\d+)'\)/;
+          //   const idResult = regex.exec(itemHref);
+          //   if (idResult) {
+          //     item.productId = Number(idResult[1]);
+          //   }
+          // } else {
+          //   item.productId = 0;
+          // }
           break;
       }
     });
