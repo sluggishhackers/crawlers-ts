@@ -142,6 +142,12 @@ model BokjiroService {
   rprsCtadr              String?
   wlfareInfoOutlCn       String?
   bizChrInstNm           String?
+  bizChrDeptNm           String?
+  state                  String?
+  simbPsbltYn            String?
+  srvId                  String?
+  blchTrgtBizDcd         String?
+  crtrYr                 String?
   onapPsbltYn            String?
   mkclUrl                String?
   onapUrl                String?

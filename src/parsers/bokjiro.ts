@@ -59,6 +59,8 @@ const detailFor03 = (html: string) => {
   _detail.etcAtcflId = undefined;
   _detail.inqTmcnt = undefined;
   _detail.useYn = undefined;
+  _detail.bizChrDeptNm = undefined;
+  _detail.simbPsbltYn = undefined;
 
   const detail: ServiceInfoToInsert = {
     ..._detail,

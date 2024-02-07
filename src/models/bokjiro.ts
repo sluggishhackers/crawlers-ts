@@ -61,6 +61,12 @@ export type ServiceInfo = {
   rprsCtadr: string;
   wlfareInfoOutlCn: string;
   bizChrInstNm: string;
+  bizChrDeptNm?: string;
+  state?: string;
+  simbPsbltYn?: "Y" | "N";
+  srvId?: string;
+  blchTrgtBizDcd?: string;
+  crtrYr?: string;
   onapPsbltYn: "Y" | "N";
   mkclUrl: null;
   onapUrl: null;
@@ -109,6 +115,12 @@ export type ServiceInfoToInsert = {
   rprsCtadr: string;
   wlfareInfoOutlCn: string;
   bizChrInstNm: string;
+  bizChrDeptNm?: string;
+  state?: string;
+  simbPsbltYn?: "Y" | "N";
+  srvId?: string;
+  blchTrgtBizDcd?: string;
+  crtrYr?: string;
   onapPsbltYn: "Y" | "N";
   mkclUrl: null;
   onapUrl: null;
