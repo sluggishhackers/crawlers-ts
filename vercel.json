@@ -13,22 +13,6 @@
       "schedule": "0 0 * * *"
     },
     {
-      "path": "/api/elections/general/national-assembly",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/elections/general/gusigun-jangs",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/elections/general/gusigun-assembly",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/elections/general/municipal-assembly",
-      "schedule": "0 0 * * *"
-    },
-    {
       "path": "/api/mfds/suspended-items",
       "schedule": "0 0 * * *"
     },

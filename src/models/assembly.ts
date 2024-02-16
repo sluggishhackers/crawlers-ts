@@ -1,3 +1,5 @@
+export type ServerSideNationalAssemblyMemberFromOpenWatch = unknown;
+
 export type ServerSideAssemblyMember = {
   MONA_CD: string;
   HG_NM: string;

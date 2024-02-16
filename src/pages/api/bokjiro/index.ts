@@ -32,8 +32,9 @@ export default async function handler(
   // const _result = listResponse.data as ServerSideServiceList;
   // const totalPage = Math.ceil(_result.dmCount.dsServiceList0Count / pageSize);
 
-  for (let i = 1; i <= 30; i++) {
+  for (let i = 1; i <= 10; i++) {
     const listResponse = await fetch.fetch({ page: i });
+
     const result = listResponse.data as ServerSideServiceList;
     const services = await parser.list(result);
 
