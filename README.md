@@ -2,6 +2,8 @@
 
 ## services
 
+- 선거관리위원회
+  - [24년도 예비후보자 명부](http://info.nec.go.kr/main/showDocument.xhtml?electionId=0020240410&topMenuId=PC&secondMenuId=PCRI03)
 - [대전광역시 지역위원회 목록](https://www.daejeon.go.kr/drh/acm/drhAcmBoardList.do?menuSeq=6412)
 - [복지로](https://www.bokjiro.go.kr) w/ [비투비](https://btob.or.kr/)
 - 의안 목록 w/ [정보공개센터](https://cfoi.or.kr/)
