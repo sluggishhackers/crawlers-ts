@@ -38,12 +38,13 @@ export default async function handler(
         cityCode: `${sido.CODE}`,
         electionCode: electionCode as fetch.GeneralElectionCode,
         electoralDistrictCode: `${electoralDistrict.CODE}`,
-        statementId: `PCRI03_#${electionCode}`,
+        statementId: `CPRI03_#${electionCode}`,
       });
 
       const candidates = parser.generalElectionCandidates(html);
 
       for (const candidate of candidates) {
+        console.log(candidate);
         const existingCandidate =
           await prisma.generalElectionCandidate.findFirst({
             where: {
@@ -63,6 +64,13 @@ export default async function handler(
               electoralDistrictCode: +electoralDistrict.CODE,
               careers: candidate.careers.join("\n"),
               educations: candidate.educations.join("\n"),
+              criminalRecord: candidate.criminalRecord,
+              property: candidate.property,
+              militaryEnrollment: candidate.militaryEnrollment,
+              taxPayment: candidate.taxPayment,
+              taxEvasionForLastFiveYears: candidate.taxEvasionForLastFiveYears,
+              taxEvasionForNow: candidate.taxEvasionForNow,
+              numberOfCandidacies: candidate.numberOfCandidacies,
               electionType,
               active: true,
             },
@@ -80,6 +88,13 @@ export default async function handler(
               electoralDistrictCode: +electoralDistrict.CODE,
               careers: candidate.careers.join("\n"),
               educations: candidate.educations.join("\n"),
+              criminalRecord: candidate.criminalRecord,
+              property: candidate.property,
+              militaryEnrollment: candidate.militaryEnrollment,
+              taxPayment: candidate.taxPayment,
+              taxEvasionForLastFiveYears: candidate.taxEvasionForLastFiveYears,
+              taxEvasionForNow: candidate.taxEvasionForNow,
+              numberOfCandidacies: candidate.numberOfCandidacies,
               electionType,
               active: true,
             },

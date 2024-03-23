@@ -11,6 +11,28 @@ export type GeneralElectionCode = {
   구시군장선거: "4";
   시도의회의원선거: "5";
   구시군의회의원선거: "6";
+  비례대표: "7";
+};
+
+export const generalElectionPropotionalParties = async ({
+  electionCode,
+}: {
+  electionCode: GeneralElectionCode;
+}): Promise<ServerSideGeneralElectionSido[]> => {
+  const result = await axios.post(
+    `http://info.nec.go.kr/bizcommon/selectbox/selectbox_cityCodeBySgJson.json`,
+    {
+      electionId: ELECTION_ID,
+      electionCode,
+    },
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
+
+  return result.data.jsonResult.body as ServerSideGeneralElectionSido[];
 };
 
 export const generalElectionSidos = async ({
@@ -19,7 +41,7 @@ export const generalElectionSidos = async ({
   electionCode: GeneralElectionCode;
 }): Promise<ServerSideGeneralElectionSido[]> => {
   const result = await axios.post(
-    `http://info.nec.go.kr/bizcommon/selectbox/selectbox_cityCodeBySgJson.json`,
+    `	http://info.nec.go.kr/bizcommon/selectbox/selectbox_cityCodeBySgJson.json`,
     {
       electionId: ELECTION_ID,
       electionCode,
@@ -65,15 +87,26 @@ export const generalElectionElectoralDistricts = async ({
   cityCode: string;
   electionCode: GeneralElectionCode;
 }): Promise<ServerSideGeneralElectionElectoralDistrict[]> => {
+  console.log({
+    electionId: ELECTION_ID,
+    electionCode,
+    cityCode,
+  });
   const result = await axios.post(
     `http://info.nec.go.kr/bizcommon/selectbox/selectbox_townCodeBySgJson.json`,
     {
       electionId: ELECTION_ID,
       electionCode,
       cityCode,
+    },
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
     }
   );
 
+  console.log(result.data);
   return result.data.jsonResult
     .body as ServerSideGeneralElectionElectoralDistrict[];
 };
@@ -83,27 +116,36 @@ export const generalElectionCandidates = async ({
   electionCode,
   electoralDistrictCode,
   statementId,
+  townCode,
+  sggTownCode,
+  proportionalRepresentationCode,
 }: {
-  cityCode: string;
+  townCode?: string;
+  cityCode?: string;
   electionCode: GeneralElectionCode;
-  electoralDistrictCode: string;
+  electoralDistrictCode?: string;
   statementId: string;
+  sggTownCode?: string;
+  proportionalRepresentationCode?: string;
 }): Promise<string> => {
   const result = await axios.post(
-    `http://info.nec.go.kr/electioninfo/electionInfo_report.xhtml`,
+    `	http://info.nec.go.kr/electioninfo/electionInfo_report.xhtml`,
     {
       electionId: ELECTION_ID,
-      topMenuId: "PC",
-      secondMenuId: "PCRI03",
-      menuId: "PCRI03",
-      requestURI: "/electioninfo/0020240410/pc/pcri03_ex.jsp",
+      topMenuId: "CP",
+      secondMenuId: "CPRI03",
+      menuId: "CPRI03",
+      requestURI: "/electioninfo/0020240410/cp/cpri03.jsp",
       statementId,
       electionCode,
-      cityCode,
-      sggCityCode: electoralDistrictCode,
-      townCode: "-1",
-      x: "63",
-      y: "26",
+      cityCode: cityCode || "-1",
+      sggCityCode: electoralDistrictCode || "-1",
+      proportionalRepresentationCode: proportionalRepresentationCode || "-1",
+      townCode: townCode || "-1",
+      sggTownCode: sggTownCode || "0",
+      dateCode: "0",
+      x: "32",
+      y: "22",
     },
     {
       headers: {

@@ -1,6 +1,7 @@
 export type Bill = {
   city?: string;
   category?: string;
+  kind?: string;
   year?: number;
   term?: string;
   number: number;
@@ -12,4 +13,8 @@ export type Bill = {
   committee?: string;
   committeeResult?: string;
   plenarySessionResult?: string;
+  transferedDateToExecutingAgency?: string;
+  gazetteNumber?: string;
+  gazetteDate?: string;
+  withdrawal?: string;
 };

@@ -28,7 +28,7 @@ export default async function handler(
   });
 
   for (const sido of sidos) {
-    const electoralDistricts = await fetch.generalElectionSigungus({
+    const electoralDistricts = await fetch.generalElectionElectoralDistricts({
       cityCode: `${sido.CODE}`,
       electionCode: electionCode as fetch.GeneralElectionCode,
     });
@@ -38,7 +38,8 @@ export default async function handler(
         cityCode: `${sido.CODE}`,
         electionCode: electionCode as fetch.GeneralElectionCode,
         electoralDistrictCode: `${electoralDistrict.CODE}`,
-        statementId: `PCRI03_#${electionCode}`,
+        statementId: `CPRI03_#${electionCode}`,
+        townCode: `${electoralDistrict.CODE}`,
       });
 
       const candidates = parser.generalElectionCandidates(html);
@@ -66,6 +67,13 @@ export default async function handler(
               electoralDistrictCode: +electoralDistrict.CODE,
               careers: candidate.careers.join("\n"),
               educations: candidate.educations.join("\n"),
+              criminalRecord: candidate.criminalRecord,
+              property: candidate.property,
+              militaryEnrollment: candidate.militaryEnrollment,
+              taxPayment: candidate.taxPayment,
+              taxEvasionForLastFiveYears: candidate.taxEvasionForLastFiveYears,
+              taxEvasionForNow: candidate.taxEvasionForNow,
+              numberOfCandidacies: candidate.numberOfCandidacies,
               electionType,
               active: true,
             },
@@ -83,6 +91,13 @@ export default async function handler(
               electoralDistrictCode: +electoralDistrict.CODE,
               careers: candidate.careers.join("\n"),
               educations: candidate.educations.join("\n"),
+              criminalRecord: candidate.criminalRecord,
+              property: candidate.property,
+              militaryEnrollment: candidate.militaryEnrollment,
+              taxPayment: candidate.taxPayment,
+              taxEvasionForLastFiveYears: candidate.taxEvasionForLastFiveYears,
+              taxEvasionForNow: candidate.taxEvasionForNow,
+              numberOfCandidacies: candidate.numberOfCandidacies,
               electionType,
               active: true,
             },
