@@ -15,7 +15,8 @@ export type ServerSideGeneralElectionElectoralDistrict = {
 
 export type ServerSideGeneralElectionCandidate = {
   address: string;
-  orderNumber: number;
+  number: number;
+  order: number;
   job: string;
   electoralDistrict: string;
   name: string;

@@ -1,3 +1,4 @@
+import qs from "qs";
 import * as https from "https";
 import axios from "axios";
 import {
@@ -6,6 +7,54 @@ import {
   ShortItem,
   SuspendedItem,
 } from "@/models/mfds";
+
+export const drugs = async ({ page }: { page: number }) => {
+  const query = qs.stringify({
+    sort: "",
+    sortOrder: false,
+    searchYn: true,
+    ExcelRowdata: "",
+    page,
+    searchDivision: "detail",
+    itemName: "",
+    itemEngName: "",
+    entpName: "",
+    entpEngName: "",
+    ingrName1: "",
+    ingrName2: "",
+    ingrName3: "",
+    ingrEngName: "",
+    itemSeq: "",
+    stdrCodeName: "",
+    atcCodeName: "",
+    indutyClassCode: "",
+    sClassNo: "",
+    narcoticKindCode: "",
+    cancelCode: "",
+    etcOtcCode: "",
+    makeMaterialGb: "",
+    searchConEe: "AND",
+    eeDocData: "",
+    searchConUd: "AND",
+    udDocData: "",
+    searchConNb: "AND",
+    nbDocData: "",
+    startPermitDate: "",
+    endPermitDate: "",
+  });
+
+  const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+  const result = await axios.get(
+    `https://nedrug.mfds.go.kr/searchDrug?${query}`,
+    {
+      httpsAgent,
+    }
+  );
+
+  return result.data;
+};
 
 export const suspendedItems = async ({
   page,

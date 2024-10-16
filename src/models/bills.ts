@@ -1,20 +1,4 @@
 export type Bill = {
-  city?: string;
-  category?: string;
-  kind?: string;
-  year?: number;
-  term?: string;
-  number: number;
-  title: string;
-  link: string;
-  representativeProposer?: string;
-  proposer?: string;
-  proposedDate?: string;
-  committee?: string;
-  committeeResult?: string;
-  plenarySessionResult?: string;
-  transferedDateToExecutingAgency?: string;
-  gazetteNumber?: string;
-  gazetteDate?: string;
-  withdrawal?: string;
+  city: string;
+  [key: string]: any;
 };

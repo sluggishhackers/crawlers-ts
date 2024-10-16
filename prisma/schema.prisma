@@ -401,7 +401,8 @@ enum GeneralElectionType {
 
 model GeneralElectionCandidate {
   id                         Int     @id @default(autoincrement())
-  orderNumber                Int?
+  order                      Int?
+  number                     Int?
   property                   Int?
   name                       String
   nameHanja                  String?
@@ -428,4 +429,81 @@ model GeneralElectionCandidate {
 
   active       Boolean              @default(false)
   electionType GeneralElectionType?
+}
+
+model Euian {
+  id                              Int     @id @default(autoincrement())
+  city                            String
+  link                            String?
+  number                          Int?    @map("번호")
+  age                             Int?    @map("대수")
+  title                           String? @map("의안명") @db.Text
+  committee                       String? @map("소관위원회") @db.Text
+  proposer                        String? @map("제안자") @db.Text
+  proposed_at                     String? @map("제안일") @db.Text
+  euian_number                    String? @map("의안번호") @db.Text
+  euian_type                      String? @map("의안종류") @db.Text
+  euian_class                     String? @map("의안구분") @db.Text
+  euian_proposed_class            String? @map("발의구분") @db.Text
+  euian_proposer                  String? @map("1인발의의원") @db.Text
+  euian_coproposer                Json?   @map("공동발의의원")
+  committee_reported_at           String? @map("소관위원회심사경과_회부일") @db.Text
+  committee_proposed_at           String? @map("소관위원회심사경과_상정일") @db.Text
+  committee_reviewed_at           String? @map("소관위원회심사경과_심사일") @db.Text
+  committee_result                String? @map("소관위원회심사경과_처리결과") @db.Text
+  plenary_reported_at             String? @map("본회의심사경과_심사보고일") @db.Text
+  plenary_proposed_at             String? @map("본회의심사경과_상정일") @db.Text
+  plenary_decided_at              String? @map("본회의심사경과_의결일") @db.Text
+  plenary_result                  String? @map("본회의심사경과_처리결과") @db.Text
+  plenary_result_discuss_link     String? @map("본회의심사경과_처리결과_회의록링크") @db.Text
+  summary                         String? @map("제안요지") @db.Text
+  executive_agency_transferred_at String? @map("집행기관이송일") @db.Text
+  promulgation_number             String? @map("공포번호") @db.Text
+  promulgation_date               String? @map("공포일") @db.Text
+  withdrawal_reconsideration      String? @map("철회/재의") @db.Text
+  result                          String? @map("처리결과(진행사항)") @db.Text
+  introducer                      String? @map("소개의원") @db.Text
+  files                           Json?
+}
+
+model MfdsDrug {
+  id                    Int     @id @default(autoincrement())
+  name                  String
+  nameEng               String?
+  corpName              String?
+  corpNameEng           String?
+  code                  String
+  permissionNumber      String
+  permissionDate        String?
+  distinction           String?
+  state                 String?
+  stateUpdatedDate      String?
+  primaryIngredient     String?
+  primaryIngredientEng  String?
+  additive              String?
+  bundle                String?
+  classification        String?
+  prescription          String?
+  wanjaeDisticntion     String?
+  permittedState        String?
+  manufacturingOrImport String?
+  importNation          String?
+  narcotics             String?
+  new                   String?
+  standardCode2         String?
+  atcCode               String?
+}
+
+model CouncilMinute {
+  id          Int     @id @default(autoincrement())
+  council     String
+  meetingType String
+  meetingDates       String
+  meetingNumber Int
+
+  sessionOrder Int
+  sessionTitle String
+  sessionDate String
+  sessionKey String
+  videoLink String
 }

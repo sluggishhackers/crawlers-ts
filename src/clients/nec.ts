@@ -106,7 +106,6 @@ export const generalElectionElectoralDistricts = async ({
     }
   );
 
-  console.log(result.data);
   return result.data.jsonResult
     .body as ServerSideGeneralElectionElectoralDistrict[];
 };
