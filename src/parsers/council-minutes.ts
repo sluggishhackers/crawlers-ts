@@ -57,6 +57,7 @@ export const seoulCouncilMinutes = async (
       cookies: options.responseCookies,
     }
   );
+
   const vodLink = await seoulCouncilMinutesVod(vod.data);
   targetSession.videoLink = vodLink;
 

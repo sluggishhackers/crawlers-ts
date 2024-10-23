@@ -15,6 +15,11 @@ export const fetchSessionVod = (
   { key }: { key: string },
   options: { csrf: string; cookies: AxiosHeaderValue }
 ) => {
+  const _cookies =
+    (options.cookies! as string[])
+      .map((cookie) => cookie.split(";")[0])
+      .join(";") || "";
+
   return axios.post(
     `https://ms.smc.seoul.kr/kr/cast/ajaxItemList.do?_csrf=${options.csrf}`,
     {
@@ -24,8 +29,8 @@ export const fetchSessionVod = (
     {
       httpsAgent,
       headers: {
-        Cookie: (options.cookies! as string[]).join("; "),
-        "X-CSRF-TOKEN": options.csrf,
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        Cookie: _cookies,
       },
     }
   );
