@@ -1,8 +1,12 @@
 import { fetchSessionVod } from "@/clients/seoul-council-minutes";
+import { AxiosHeaderValue } from "axios";
 import { load } from "cheerio";
 
 const council = "서울특별시의회";
-export const seoulCouncilMinutes = async (html: string) => {
+export const seoulCouncilMinutes = async (
+  html: string,
+  options: { csrf: string; responseCookies: AxiosHeaderValue }
+) => {
   const $ = load(html);
   const contents = $("#sub_general");
   let targetSession: any = { council };
@@ -46,8 +50,13 @@ export const seoulCouncilMinutes = async (html: string) => {
     }
   });
 
-  console.log(targetSession);
-  const vod = await fetchSessionVod({ key: targetSession.sessionKey });
+  const vod = await fetchSessionVod(
+    { key: targetSession.sessionKey },
+    {
+      csrf: options.csrf,
+      cookies: options.responseCookies,
+    }
+  );
   const vodLink = await seoulCouncilMinutesVod(vod.data);
   targetSession.videoLink = vodLink;
 

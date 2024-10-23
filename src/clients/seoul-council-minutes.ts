@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosHeaderValue } from "axios";
 import * as https from "https";
 
 const httpsAgent = new https.Agent({
@@ -11,19 +11,22 @@ export const fetch = () => {
   });
 };
 
-export const fetchSessionVod = ({ key }: { key: string }) => {
+export const fetchSessionVod = (
+  { key }: { key: string },
+  options: { csrf: string; cookies: AxiosHeaderValue }
+) => {
   return axios.post(
-    "https://ms.smc.seoul.kr/kr/cast/ajaxItemList.do?_csrf=794f6d6e-e824-4f3d-bc8a-0f87597afceb",
+    `https://ms.smc.seoul.kr/kr/cast/ajaxItemList.do?_csrf=${options.csrf}`,
     {
       key,
+      _crsf: options.csrf,
     },
     {
-      headers: {
-        Cookie:
-          "WL_PCID=27149403130637326340983; WMONID=D54GNciin8a; JSESSIONID=546C7F46700EC7401FCC6A26F4FD4822.tomcat2",
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      },
       httpsAgent,
+      headers: {
+        Cookie: (options.cookies! as string[]).join("; "),
+        "X-CSRF-TOKEN": options.csrf,
+      },
     }
   );
 };
