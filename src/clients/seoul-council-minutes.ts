@@ -5,10 +5,29 @@ const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-export const fetch = () => {
-  return axios.get("https://ms.smc.seoul.kr/kr/cast/vod2.do", {
-    httpsAgent,
-  });
+export const fetch = ({
+  sTh,
+  committeeCode,
+  councilId,
+  x,
+  y,
+}: {
+  sTh?: number;
+  committeeCode: string;
+  councilId?: string;
+  x?: number;
+  y?: number;
+}) => {
+  return axios.get(
+    `https://ms.smc.seoul.kr/kr/cast/vod2.do?sTh=${
+      sTh || 11
+    }&committeeCode=${committeeCode}&councilId=${councilId || "SEOUL"}&x=${
+      x || 28
+    }&y=${y || 12}`,
+    {
+      httpsAgent,
+    }
+  );
 };
 
 export const fetchSessionVod = (
