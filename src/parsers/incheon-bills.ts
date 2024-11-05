@@ -8,6 +8,7 @@ export const bills = (html: string): Bill[] => {
 
   rows.each((_index, row) => {
     const bill: Bill = {
+      city: "incheon",
       number: 0,
       title: "",
       link: "",

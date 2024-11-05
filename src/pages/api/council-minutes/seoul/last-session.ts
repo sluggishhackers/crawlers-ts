@@ -31,7 +31,7 @@ export default async function handler(
     if (csrf && csrf[1]) {
       const result = await seoulCouncilMinutes(response.data, {
         csrf: csrf[1],
-        responseCookies: response.headers["set-cookie"] as AxiosHeaderValue,
+        responseCookies: response.headers["set-cookie"],
       });
 
       const existingCouncilMinutes = await prisma.councilMinute.findFirst({

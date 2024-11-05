@@ -19,7 +19,7 @@
     {
       "path": "/api/korean-bars/disciplines",
       "schedule": "0 0 * * *"
-    }
+    },
     {
       "path": "/api/council-minutes/seoul/last-session",
       "schedule": "0 * * * *"

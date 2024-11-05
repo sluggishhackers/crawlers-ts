@@ -1,11 +1,10 @@
 import { fetchSessionVod } from "@/clients/seoul-council-minutes";
-import { AxiosHeaderValue } from "axios";
 import { load } from "cheerio";
 
 const council = "서울특별시의회";
 export const seoulCouncilMinutes = async (
   html: string,
-  options: { csrf: string; responseCookies: AxiosHeaderValue }
+  options: { csrf: string; responseCookies: any }
 ) => {
   const $ = load(html);
   const contents = $("#sub_general");

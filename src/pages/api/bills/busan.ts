@@ -35,12 +35,12 @@ export default async function handler(
       });
 
       if (!existingRow) {
-        await prisma.bill.create({
-          data: {
-            ...bill,
-            city: CITY_NAME,
-          },
-        });
+        // await prisma.bill.create({
+        //   data: {
+        //     ...bill,
+        //     city: CITY_NAME,
+        //   },
+        // });
 
         await sendMessage({
           text: `📃 ${CITY_NAME} ${bill.number} ${bill.title} ${bill.link}`,

@@ -1,4 +1,4 @@
-import axios, { AxiosHeaderValue } from "axios";
+import axios from "axios";
 import * as https from "https";
 
 const httpsAgent = new https.Agent({
@@ -13,7 +13,7 @@ export const fetch = () => {
 
 export const fetchSessionVod = (
   { key }: { key: string },
-  options: { csrf: string; cookies: AxiosHeaderValue }
+  options: { csrf: string; cookies: any }
 ) => {
   const _cookies =
     (options.cookies! as string[])
