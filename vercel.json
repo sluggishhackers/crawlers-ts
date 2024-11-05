@@ -22,7 +22,7 @@
     },
     {
       "path": "/api/council-minutes/seoul/last-session",
-      "schedule": "0 * * * *"
+      "schedule": "5 * * * *"
     }
   ]
 }
