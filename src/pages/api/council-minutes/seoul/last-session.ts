@@ -21,7 +21,7 @@ const targetsBySession: { [key: string]: string } = {
 
   행정자치위원회: "01027235578", // committeCode: "C030",
   주택균형개발위원회: "", // committeCode: "C208",
-  도시계획균형위원회: "01087940615", // committeCode: "C225",
+  도시계획공간위원회: "01087940615", // committeCode: "C225",
 };
 
 export default async function handler(
