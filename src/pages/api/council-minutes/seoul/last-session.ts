@@ -8,17 +8,20 @@ import * as solapi from "@/utils/solapi";
 const targetsForAll = ["01022774551", "01025905732", "01089093115"];
 
 const targetsBySession: { [key: string]: string } = {
-  행정자치위원회: "01027235578", // committeCode: "C030",
-  기획경제위원회: "01086147528", // committeCode: "C050",
   환경수자원위원회: "01067893591", // committeCode: "C130",
-  문화체육관광위원회: "01044087627", // committeCode: "C163",
-  보건복지위원회: "01098879634", // committeCode: "C165",
   도시안전건설위원회: "01074903396", // committeCode: "C207",
-  주택균형개발위원회: "", // committeCode: "C208",
-  주택공간위원회: "01032187917", // committeCode: "C222",
-  도시계획균형위원회: "01087940615", // committeCode: "C225",
-  교통위원회: "01092878414", // committeCode: "C200",
   교육위원회: "01026508740", // committeCode: "C210",
+  주택공간위원회: "01032187917", // committeCode: "C222",
+  기획경제위원회: "01086147528", // committeCode: "C050",
+  교통위원회: "01092878414", // committeCode: "C200",
+  문화체육관광위원회: "01044087627", // committeCode: "C163",
+  "문화체육관광위원회[폐회중]": "01044087627", // committeCode: "C163",
+  보건복지위원회: "01098879634", // committeCode: "C165",
+  "보건복지위원회[페회중]": "01098879634", // committeCode: "C165",
+
+  행정자치위원회: "01027235578", // committeCode: "C030",
+  주택균형개발위원회: "", // committeCode: "C208",
+  도시계획균형위원회: "01087940615", // committeCode: "C225",
 };
 
 export default async function handler(
