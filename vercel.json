@@ -53,7 +53,7 @@
       "schedule": "10 * * * *"
     },
     {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C225",
+      "path": "/api/council-minutes/seoul/last-session?committeeCode=C221",
       "schedule": "10 * * * *"
     },
     {
