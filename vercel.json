@@ -19,50 +19,6 @@
     {
       "path": "/api/korean-bars/disciplines",
       "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C030",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C050",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C130",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C163",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C165",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C207",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C208",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C222",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C221",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C200",
-      "schedule": "10 * * * *"
-    },
-    {
-      "path": "/api/council-minutes/seoul/last-session?committeeCode=C210",
-      "schedule": "10 * * * *"
     }
   ]
 }
