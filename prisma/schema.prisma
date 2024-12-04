@@ -495,15 +495,24 @@ model MfdsDrug {
 }
 
 model CouncilMinute {
-  id          Int     @id @default(autoincrement())
-  council     String
-  meetingType String
-  meetingDates       String
+  id            Int    @id @default(autoincrement())
+  council       String
+  meetingType   String
+  meetingDates  String
   meetingNumber Int
 
   sessionOrder Int
   sessionTitle String
-  sessionDate String
-  sessionKey String
-  videoLink String
+  sessionDate  String
+  sessionKey   String
+  videoLink    String
+}
+
+model StatementArticles {
+  id           Int     @id @default(autoincrement())
+  groupName    String  @unique
+  articleCount Int
+  articles     Json[]
+  active       Boolean @default(false)
+  allianceId   String?
 }
