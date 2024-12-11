@@ -11,6 +11,7 @@ export default async function handler(
 ) {
   const group = (req.query.group || "사회단체") as OrgTypes;
   const targetOrgs = orgs[group];
+
   for (const org of targetOrgs) {
     const parsedOrg = org.split(")")[1]
       ? org.split(")")[1].trim()

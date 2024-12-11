@@ -516,3 +516,29 @@ model StatementArticles {
   active       Boolean @default(false)
   allianceId   String?
 }
+
+model EppCivicComplaint {
+  auto_id            Int     @id @default(autoincrement())
+  id                 String  @unique
+  title              String?
+  date               String?
+  status             String?
+  agency             String?
+  agencyItemId       String?
+  agencyDate         String?
+  agencyPerson       String?
+  agencySupposedDate String?
+  url                String?
+
+  pttnRqstNo         String?
+  instRcptSn         String?
+  pttnRcptPrcsSttsCd String?
+  stsfdYn            String?
+  pttnCnfmMthYn      String?
+  pttnTypeNm         String?
+
+  registerName String?
+
+  answer     String?
+  answerDate String?
+}
